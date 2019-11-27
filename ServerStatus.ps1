@@ -14,11 +14,8 @@ foreach ($server in $servers)
         $result = $null
         $result = [System.Net.Dns]::gethostentry($server)
        
-       If ($Result) { 
-       #$status["DNS"] = [System.Net.Dns]::gethostentry($server) 
-       $status["DNS"] = [string]$Result.HostName
-       }
-        Else    {         $status["DNS"] = "UnableToResolve"        }       
+       If ($Result) {    $status["DNS"] = [string]$Result.HostName      }
+       Else    {         $status["DNS"] = "UnableToResolve"        }       
 
     } 
     else 
@@ -27,6 +24,6 @@ foreach ($server in $servers)
     }
     New-Object -TypeName PSObject -Property $status -OutVariable serverStatus
     $collection += $serverStatus
-
 }
+
 $collection | Export-Csv C:\temp\ServerStatus.csv -NoTypeInformation
